@@ -321,10 +321,25 @@ public class TestSistemaDeEventos {
 	}
 	
 	
+	@Test
+	public void dadoQueExisteUnEventoConSuIdEsPosibleEliminarloExitosamente() {
+		SistemaDeEventos sistema = new SistemaDeEventos();
+		String nombre = "Lol";
+		LocalDate fecha = LocalDate.of(2025, 10, 6);
+		String lugar = "Movistar Arena";
+		
+		Casamiento casamientoNueva = new Casamiento(nombre, fecha, lugar, false);
+		Boolean seAgrego = sistema.agregarEvento(casamientoNueva);
+		assertTrue(seAgrego);
+		
+		Integer eventoId = casamientoNueva.getId();
+		Boolean eliminado = sistema.eliminarEventoPorId(eventoId);
+		
+		assertTrue(eliminado);
+	}
 	
 	// buscar cuantos eventos se encuentran disponibles en un lapso de dos fechas VERO
 	
-	// eliminar evento con exito por ID DORIAN
 	
 	// eliminar participante por DNI JULI
 		
