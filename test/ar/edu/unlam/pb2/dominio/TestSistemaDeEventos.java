@@ -320,6 +320,36 @@ public class TestSistemaDeEventos {
 		
 	}
 	
+	@Test
+	public void dadoQueExisteUnEventoDevolverUnaListaConCantidadDeParticipantes() {
+		SistemaDeEventos sistema = new SistemaDeEventos();
+		
+		String nombre = "Lol";
+		LocalDate fecha = LocalDate.of(2025, 10, 6);
+		String lugar = "Movistar Arena";
+		
+		Casamiento casamientoNueva = new Casamiento(nombre, fecha, lugar, false);
+		Boolean seAgrego = sistema.agregarEvento(casamientoNueva);
+		Integer casamientoId = casamientoNueva.getId();
+		assertTrue(seAgrego);
+		Persona persona1 = new Persona(912, "Jose", 20);
+		Persona persona2 = new Persona(1, "Julieta", 74); // False porque el limite de CANTIDAD_PARTICIPANTES es 1
+		Persona persona3 = new Persona(188, "Salva", 20); // False porque el limite de CANTIDAD_PARTICIPANTES es 1
+		
+		Boolean seAgregoParticipante = sistema.agregarParticipante(casamientoId, persona1);
+		Boolean seAgregoParticipante2 = sistema.agregarParticipante(casamientoId, persona2);
+		Boolean seAgregoParticipante3 = sistema.agregarParticipante(casamientoId, persona3);
+		
+		assertTrue(seAgregoParticipante);
+	    assertFalse(seAgregoParticipante2);
+	    assertFalse(seAgregoParticipante3);
+	    
+	    Integer valorEsperado= 1;
+	    Integer valorObtenido= casamientoNueva.getParticipantes().size();
+	    
+	    assertEquals(valorEsperado, valorObtenido);
+		
+	}
 	
 	@Test
 	public void dadoQueExisteUnEventoConSuIdEsPosibleEliminarloExitosamente() {
